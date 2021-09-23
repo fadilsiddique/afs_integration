@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include afs_integration *.css
+recursive-include afs_integration *.csv
+recursive-include afs_integration *.html
+recursive-include afs_integration *.ico
+recursive-include afs_integration *.js
+recursive-include afs_integration *.json
+recursive-include afs_integration *.md
+recursive-include afs_integration *.png
+recursive-include afs_integration *.py
+recursive-include afs_integration *.svg
+recursive-include afs_integration *.txt
+recursive-exclude afs_integration *.pyc
