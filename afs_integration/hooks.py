@@ -97,6 +97,13 @@ app_license = "MIT"
 #	}
 # }
 
+# doc_events={
+# 	"Quotation":{
+# 		"on_submit":["afs_integration.order.place_order"]
+# 	}
+# }
+
+
 # Scheduled Tasks
 # ---------------
 
