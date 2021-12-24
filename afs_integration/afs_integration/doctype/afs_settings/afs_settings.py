@@ -48,6 +48,7 @@ class AfsSettings(Document):
 @frappe.whitelist()
 
 def get_payment_info(order_id,dt,dn):
+	# storing sensitive values in .env files
 	from dotenv import load_dotenv
 	load_dotenv()
 
