@@ -28,8 +28,8 @@ class AfsSettings(Document):
 		doc.save(ignore_permissions=True)
 
 	def validate(self):
-		create_payment_gateway('Afs')
-		call_hook_method('payment_gateway_enabled', gateway='Afs')
+		create_payment_gateway('Afs Test')
+		call_hook_method('payment_gateway_enabled', gateway='Afs Test')
 
 	def validate_transaction_currency(self, currency):
 		if currency not in self.supported_currencies:
@@ -38,14 +38,14 @@ class AfsSettings(Document):
 	def get_payment_url(self, **kwargs):
 		'''Return payment url with several params'''
 		# create unique order id by making it equal to the integration request
-		integration_request = create_request_log(kwargs, "Host", "Afs")
+		integration_request = create_request_log(kwargs, "Host", "Afs Test")
 		kwargs.update(dict(order_id=integration_request.name))
 		# add payment gateway name
 		kwargs.update({'gateway':self.name})
 
 		return integration_request
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 
 def get_payment_info(order_id,dt,dn):
 	# storing sensitive values in .env files
