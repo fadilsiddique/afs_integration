@@ -1,4 +1,3 @@
-from lzma import _OpenBinaryWritingMode
 import frappe
 import json
 from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice
