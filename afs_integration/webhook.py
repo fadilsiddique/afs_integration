@@ -20,8 +20,8 @@ def webhook(**kwargs):
     
 
     if status=='SUCCESS':
-       invoice= make_sales_invoice(source_name=reference_doc_id)
-       invoice.submit(ignore_permissions=True)
+       invoice= make_sales_invoice(source_name=reference_doc_id,ignore_permissions=True)
+       invoice.submit()
 
        invoice_doc=frappe.get_doc('Sales Invoice',invoice.name)
        return invoice
