@@ -1,7 +1,7 @@
 import frappe
 import json
 from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice
-from erpnext.accounts.doctype.payment_request.payment_request import create_payment_entry
+
 
 @frappe.whitelist(allow_guest=True)
 
@@ -24,7 +24,6 @@ def webhook(**kwargs):
        invoice.submit()
 
        invoice_doc=frappe.get_doc('Sales Invoice',invoice.name)
-       payment_entry=invoice_doc.create_payment_entry()
        return invoice
 
 # def invoice_testing(source_name,test_id):
