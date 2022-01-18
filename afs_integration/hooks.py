@@ -136,6 +136,10 @@ app_license = "MIT"
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "afs_integration.event.get_events"
 # }
+
+# override_whitelisted_methods={
+# 	"erpnext.selling.doctype.sales_order.sales_order.make_sales_invoice":"afs_integration.make_invoice.make_sales_invoice"
+# }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
