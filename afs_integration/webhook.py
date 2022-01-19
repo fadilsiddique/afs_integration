@@ -7,6 +7,7 @@ from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice
 
 def webhook(**kwargs):
     data=json.loads(frappe.request.data)
+    print(data)
     status=data.get('result')
     order_id=data.get('id')
     amount=data.get('amount')
