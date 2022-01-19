@@ -4,3 +4,4 @@
 *.swp
 tags
 afs_integration/docs/current
+.env
