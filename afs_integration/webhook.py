@@ -10,10 +10,11 @@ import os
 @frappe.whitelist(allow_guest=True)
 
 def webhook(**kwargs):
+    from dotenv import load_dotenv
+    load_dotenv()
 
-    
     head=frappe.request.headers['X-Notification-Secret']
-    secret=frappe.get_single('Webhook Secret').secret
+    secret=os.environ.get('secret')
     print(head)
 
     if head==secret:
@@ -36,8 +37,8 @@ def webhook(**kwargs):
             invoice= make_sales_invoice(source_name=reference_doc_id,ignore_permissions=True)
             invoice.submit()
 
-        invoice_doc=frappe.get_doc('Sales Invoice',invoice.name)
-        return invoice
+            invoice_doc=frappe.get_doc('Sales Invoice',invoice.name)
+            return invoice
 
 # def invoice_testing(source_name,test_id):
 #     if test_id==1:
