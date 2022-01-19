@@ -51,7 +51,7 @@ def get_payment_info(order_id,dt,dn):
 	# storing sensitive values in .env files
 	from dotenv import load_dotenv
 	load_dotenv()
-
+	
 	if request.method=='POST':
 		payment_request = frappe.get_doc('Payment Request',order_id)
 		url=os.environ.get("url")
