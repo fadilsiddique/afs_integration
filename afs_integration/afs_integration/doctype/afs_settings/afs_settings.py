@@ -86,9 +86,9 @@ def get_payment_info(order_id,dt,dn):
 
 
 # webhook
-@frappe.whitelist(allow_guest=True)
-def webhook(request):
-	print(request)
+# @frappe.whitelist(allow_guest=True)
+# def webhook(request):
+# 	print(request)
 
 
 	
