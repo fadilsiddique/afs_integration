@@ -9,11 +9,12 @@ import os
 
 @frappe.whitelist(allow_guest=True)
 
-def webhook(**kwargs):
+def webhook():
     from dotenv import load_dotenv
     load_dotenv()
 
-    head=frappe.request.headers['X-Notification-Secret']
+    head=json.loads(frappe.request.headers['X-Notification-Secret'])
+    print(head)
     secret=os.environ.get('secret')
     print(head)
 
