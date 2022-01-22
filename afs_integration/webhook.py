@@ -12,7 +12,14 @@ import os
 def webhook(*args,**kwargs):
     from dotenv import load_dotenv
     load_dotenv()
+    data=json.loads(frappe.request.data)
 
+    doc=frappe.new_doc('Webhook Capture')
+    doc.webhook_response=str(data)
+    print(doc.webhook_response)
+    doc.insert(ignore_permissions=True)
+    doc.save(ignore_permissions=True)
+    print(doc)
     # head=frappe.request.headers['X-Notification-Secret']
     head=frappe.get_request_header("X-Notification-Secret")
     print(head)
