@@ -16,8 +16,8 @@ def webhook(*args,**kwargs):
     # head=frappe.request.headers['X-Notification-Secret']
     head=frappe.get_request_header("X-Notification-Secret")
     print(head)
-    # secret=os.environ.get('secret')
-    secret='4D29ADFAAF48318B1DF309F03B949976'
+    secret=os.environ.get('secret')
+    
     print(secret)
 
     if head==secret:
