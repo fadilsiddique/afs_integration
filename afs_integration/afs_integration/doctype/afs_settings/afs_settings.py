@@ -21,7 +21,7 @@ class AfsSettings(Document):
 	supported_currencies=["BHD","INR"]
 
 	def after_insert(self):
-		doc = frappe.new_doc("Payment Gateway")2
+		doc = frappe.new_doc("Payment Gateway")
 		doc.gateway_settings = "Afs Settings"
 		doc.gateway_controller = self.name
 		doc.gateway = self.name
