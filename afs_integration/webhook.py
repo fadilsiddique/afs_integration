@@ -20,8 +20,8 @@ def webhook(*args,**kwargs):
     doc.insert(ignore_permissions=True)
     doc.save(ignore_permissions=True)
     print(doc)
-    # head=frappe.request.headers['X-Notification-Secret']
-    head=frappe.get_request_header("X-Notification-Secret")
+    head=frappe.request.headers['X-Notification-Secret']
+    # head=frappe.get_request_header("X-Notification-Secret")
     print(head)
     secret=os.environ.get('secret')
     
@@ -45,9 +45,7 @@ def webhook(*args,**kwargs):
 
         if status=='SUCCESS':
             invoice= make_sales_invoice(source_name=reference_doc_id,ignore_permissions=True)
-            invoice.submit()
-
-            invoice_doc=frappe.get_doc('Sales Invoice',invoice.name)
+            #invoice.submit()
             return invoice 
 
 # def invoice_testing(source_name,test_id):
