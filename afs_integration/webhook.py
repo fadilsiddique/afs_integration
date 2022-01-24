@@ -35,7 +35,7 @@ def webhook_data(*args,**kwargs):
         total=sales_order_doc.get('total')
         if status=='SUCCESS':
             invoice= make_sales_invoice(source_name=reference_doc_id,ignore_permissions=True)
-            #invoice.submit()
+            invoice.submit()
             return invoice
 
 # def invoice_testing(source_name,test_id):
