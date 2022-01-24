@@ -10,11 +10,11 @@ import os
 @frappe.whitelist(allow_guest=True)
 
 def webhook_data(*args,**kwargs):
+    from dotenv import load_dotenv
+    load_dotenv()
     head=frappe.request.headers['X-Notification-Secret']
     secret=os.environ.get('secret')
     if head==secret:
-        from dotenv import load_dotenv
-        load_dotenv()
         data=json.loads(frappe.request.data)
 
         doc=frappe.new_doc('Webhook Capture')
