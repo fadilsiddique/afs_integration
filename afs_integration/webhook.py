@@ -13,10 +13,6 @@ def webhook_data(*args,**kwargs):
     from dotenv import load_dotenv
     load_dotenv()
     data=json.loads(frappe.request.data)
-    doc_err=frappe.new_doc('Webhook Capture')
-    doc_err.webhook_response=str(data)
-    doc_err.insert(ignore_permissions=True)
-    doc_err.save(ignore_permissions=True)
     head=frappe.request.headers['X-Notification-Secret']
     secret=os.environ.get('secret')
     if head==secret:
@@ -43,6 +39,8 @@ def webhook_data(*args,**kwargs):
             invoice.submit()
             return invoice
 
+    else:
+        return frappe.local.response['http_status_code'] == 200
 # def invoice_testing(source_name,test_id):
 #     if test_id==1:
     
