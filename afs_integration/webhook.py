@@ -39,8 +39,6 @@ def webhook_data(*args,**kwargs):
             invoice.submit()
             return invoice
 
-    else:
-        return frappe.local.response['http_status_code'] == 200
 # def invoice_testing(source_name,test_id):
 #     if test_id==1:
     
