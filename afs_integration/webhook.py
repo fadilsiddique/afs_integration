@@ -13,7 +13,7 @@ def webhook_data(*args,**kwargs):
     from dotenv import load_dotenv
     load_dotenv()
     data=json.loads(frappe.request.data)
-    head=frappe.request.headers['X-Notification-Secret']
+    head=frappe.request.headers['x-notification-secret']
     secret=os.environ.get('secret')
     if head==secret:
         data=json.loads(frappe.request.data)
