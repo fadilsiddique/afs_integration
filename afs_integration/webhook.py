@@ -9,7 +9,7 @@ import os
 
 @frappe.whitelist(allow_guest=True)
 
-def webhook_data(*args,**kwargs):
+def webhookData(*args,**kwargs):
     from dotenv import load_dotenv
     load_dotenv()
     data=json.loads(frappe.request.data)
