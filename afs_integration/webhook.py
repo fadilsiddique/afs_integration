@@ -14,11 +14,12 @@ def webhookData(*args,**kwargs):
     data=json.loads(frappe.request.data)
     head=frappe.request.headers['x-notification-secret']
     print(head)
+    print(frappe.request.headers)
+    print(head)
     secret=os.environ.get('secret')
     print(secret)
-    if head==secret:
+    if head=='CA30951A5324FCCC66EFE9C4890E93A5':
         data=json.loads(frappe.request.data)
-
         doc=frappe.new_doc('Webhook Capture')
         doc.webhook_response=str(data)
         print(doc.webhook_response)
