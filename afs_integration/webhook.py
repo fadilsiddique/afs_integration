@@ -9,7 +9,7 @@ import os
 
 @frappe.whitelist(allow_guest=True)
 def webhookData():
-    if frappe.request.headers['x-notification-secret']=='CA30951A5324FCCC66EFE9C4890E93A5':	
+    if frappe.request.headers['X-Notification-Secret']=='CA30951A5324FCCC66EFE9C4890E93A5':
         # from dotenv import load_dotenv
         # load_dotenv()
         data=json.loads(frappe.request.data)
