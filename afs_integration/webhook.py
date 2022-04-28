@@ -9,19 +9,16 @@ import os
 
 @frappe.whitelist(allow_guest=True)
 def webhookData():
-    if frappe.request.headers['x-notification-secret']=='CA30951A5324FCCC66EFE9C4890E93A5':
-        from dotenv import load_dotenv
-        load_dotenv()
+    if frappe.request.headers['x-notification-secret']=='CA30951A5324FCCC66EFE9C4890E93A5':	
+        # from dotenv import load_dotenv
+        # load_dotenv()
         data=json.loads(frappe.request.data)
-        secret=os.environ.get('secret')
+        # secret=os.environ.get('secret')
         doc=frappe.new_doc('Webhook Capture')
         doc.webhook_response=str(data)
-        print(doc.webhook_response)
         doc.insert(ignore_permissions=True)
         doc.save(ignore_permissions=True)
-        print(doc)
         data=json.loads(frappe.request.data)
-        print(data)
         status=data.get('result')
         order_id=data.get('id')
         amount=data.get('amount')
@@ -35,12 +32,5 @@ def webhookData():
             invoice.submit()
             return invoice
 
-def invoice_testing(source_name,test_id):
-    if test_id==1:
-    
-        x=make_sales_invoice(source_name)
-        x.submit()
-
-        return x
 
 
