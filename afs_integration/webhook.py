@@ -16,7 +16,7 @@ def webhookData(*args,**kwargs):
     print(head)
     secret=os.environ.get('secret')
     print(secret)
-    if head=='CA30951A5324FCCC66EFE9C4890E93A5':
+    if head==secret:
         data=json.loads(frappe.request.data)
 
         doc=frappe.new_doc('Webhook Capture')
