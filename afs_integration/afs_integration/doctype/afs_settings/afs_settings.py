@@ -49,17 +49,18 @@ class AfsSettings(Document):
 
 def get_payment_info(order_id,dt,dn):
 	# storing sensitive values in .env files
-	from dotenv import load_dotenv
-	load_dotenv()
+	# from dotenv import load_dotenv
+	# load_dotenv()
 	
 	if request.method=='POST':
 		payment_request = frappe.get_doc('Payment Request',order_id)
-		url=os.environ.get("url")
+		# url=os.environ.get("url")
+		url="https://afs.gateway.mastercard.com/api/rest/version/61/merchant/TEST100078691/session/"
 		payload={
 			"apiOperation":"CREATE_CHECKOUT_SESSION",
 			"interaction":{
 				"operation":"PURCHASE",
-				"returnUrl":os.environ.get("return_url")
+				"returnUrl":"https://dev-zoom.tridz.in/"
 			},
 			"order":{
 				"amount":payment_request.grand_total,
@@ -77,11 +78,10 @@ def get_payment_info(order_id,dt,dn):
 		print(payload)
 
 		headers = {
-					'Authorization': os.environ.get("auth"),
+					'Authorization': "Basic bWVyY2hhbnQuVEVTVDEwMDA3ODY5MTowMGJhN2RlMDVkOTI1ODQ5YjRlNzk2MTE4NTZmMDVkMg==",
 					'Content-Type': 'text/plain'
 					}
 		response = requests.request("POST", url=url, headers=headers, data=payload)
-		print(response.json())
 		return response.json()
 
 
