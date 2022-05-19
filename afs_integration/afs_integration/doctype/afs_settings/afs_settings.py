@@ -104,19 +104,19 @@ def webhook():
 		doc.insert(ignore_permissions=True)
 		doc.save(ignore_permissions=True)
 		
-		# status=data.get('result')
-		order_id=data.get('id')
-		amount=data.get('amount')
-		pay_req=frappe.get_doc('Payment Request',order_id)
-		reference_doc_id=pay_req.get('reference_name')
-		reference_doc=pay_req.get('reference_doctype')
-		sales_order_doc=frappe.get_doc(reference_doc,reference_doc_id)
-		total=sales_order_doc.get('total')
-		if status=='SUCCESS':
-			invoice= make_sales_invoice(source_name=reference_doc_id,ignore_permissions=True)
-			invoice.submit()
+		# # status=data.get('result')
+		# order_id=data.get('id')
+		# amount=data.get('amount')
+		# pay_req=frappe.get_doc('Payment Request',order_id)
+		# reference_doc_id=pay_req.get('reference_name')
+		# reference_doc=pay_req.get('reference_doctype')
+		# sales_order_doc=frappe.get_doc(reference_doc,reference_doc_id)
+		# total=sales_order_doc.get('total')
+		# if status=='SUCCESS':
+		# 	invoice= make_sales_invoice(reference_doc_id)
+		# 	invoice.submit()
 
-			return invoice
+		# 	return invoice
         
 	# else:
 	#     doc=frappe.new_doc('Webhook Capture')
