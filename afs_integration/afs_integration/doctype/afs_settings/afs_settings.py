@@ -98,12 +98,17 @@ def webhook():
 	if header=='CA30951A5324FCCC66EFE9C4890E93A5':
 		data=json.loads(frappe.request.data)
 		status=data.get('result')
-	
+		doc=frappe.new_doc('Webhook Capture')
+		doc.webhook_response=str(data)
+		doc.insert(ignore_permissions=True)
+		doc.save(ignore_permissions=True)
+		order_id=data.get('id')
+		pay_req=frappe.get_doc('Payment Request',order_id)
+		reference_doc_id=pay_req.get('reference_name')
 		if status=='SUCCESS':
-			doc=frappe.new_doc('Webhook Capture')
-			doc.webhook_response=str(data)
-			doc.insert(ignore_permissions=True)
-			doc.save(ignore_permissions=True)
+			invoice= make_sales_invoice(source_name=reference_doc_id,target=None,ignore_permissions=True)
+			invoice.save()
+			invoice.submit()
         
 	# else:
 	#     doc=frappe.new_doc('Webhook Capture')
