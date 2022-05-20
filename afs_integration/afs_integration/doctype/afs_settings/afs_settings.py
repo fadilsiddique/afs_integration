@@ -1,6 +1,7 @@
 # Copyright (c) 2021, Tridz Technologies and contributors
 # For license information, please see license.txt
 from __future__ import unicode_literals
+import re
 from requests.api import get
 
 from requests.sessions import session
@@ -9,6 +10,7 @@ import requests
 import json
 from frappe import _,request
 from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice
+from frappe.model.mapper import make_mapped_doc
 from frappe.model.document import Document
 from frappe.utils import get_url, call_hook_method, cint, get_timestamp
 from frappe.integrations.utils import (make_get_request, make_post_request, create_request_log,
@@ -106,9 +108,21 @@ def webhook():
 		pay_req=frappe.get_doc('Payment Request',order_id)
 		reference_doc_id=pay_req.get('reference_name')
 		if status=='SUCCESS':
-			invoice= make_sales_invoice(source_name=reference_doc_id,target=None,ignore_permissions=True)
-			invoice.save()
-			invoice.submit()
+			invoice= make_mapped_doc(method="erpnext.selling.doctype.sales_order.sales_order.make_sales_invoice",source_name=reference_doc_id)
+			invoice_frappe_json=frappe.as_json(invoice)
+			invoice_json=json.loads(invoice_frappe_json)
+			invoice_json.pop('docstatus',None)
+			invoice_json['doctype']="Sales Invoice"
+			docs=frappe.get_doc(invoice_json)
+			docs.save()
+			docs.submit()
+			
+			# invoice_json=json.loads(invoice_frappe_json)
+			# invoice_json.pop('__unsaved',None)	
+			# invoice_json.pop('docstatus',None)
+			# invoice_json['doctype']="Sales Invoice"
+			# docs=frappe.get_doc(invoice_json)
+			
         
 	# else:
 	#     doc=frappe.new_doc('Webhook Capture')
