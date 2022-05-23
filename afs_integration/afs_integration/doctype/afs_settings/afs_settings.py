@@ -99,9 +99,8 @@ def webhook():
 	if header=='CA30951A5324FCCC66EFE9C4890E93A5':
 		data=json.loads(frappe.request.data)
 		status=data.get('result')
-		order_id=data.get('id')
+		order_id=data['order'].get('id')
 		pay_req=frappe.get_doc('Payment Request',order_id)
-		reference_doc_id=pay_req.get('reference_name')
 		if status=='SUCCESS':
 			doc=frappe.new_doc('Webhook Capture')
 			doc.webhook_response=str(data)
