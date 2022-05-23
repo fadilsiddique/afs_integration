@@ -113,14 +113,14 @@ def webhook():
 			docs.save(ignore_permissions=True)
 			docs.submit()
 
-			# payment_entry=get_payment_entry(dt="Sales Invoice",dn="ACC-SINV-2022-00003")
-			# payment_entry_json=frappe.as_json(payment_entry)
-			# payment_json=json.loads(payment_entry_json)
-			# payment_json.pop('docstatus',None)
-			# payment_json['doctype']="Payment Entry"
-			# payment_doc=frappe.get_doc(payment_json)
-			# payment_doc.save(ignore_permissions=True)
-			# payment_doc.submit()
+			payment_entry=get_payment_entry(dt="Sales Invoice",dn=docs.name)
+			payment_entry_json=frappe.as_json(payment_entry)
+			payment_json=json.loads(payment_entry_json)
+			payment_json.pop('docstatus',None)
+			payment_json['doctype']="Payment Entry"
+			payment_doc=frappe.get_doc(payment_json)
+			payment_doc.save(ignore_permissions=True)
+			payment_doc.submit()
 			# invoice_json=json.loads(invoice_frappe_json)
 			# invoice_json.pop('__unsaved',None)	
 			# invoice_json.pop('docstatus',None)
