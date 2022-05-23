@@ -92,12 +92,6 @@ def get_payment_info(order_id,dt,dn):
 @frappe.whitelist(allow_guest=True)
 def webhook():
 	header=frappe.request.headers['x-notification-secret']
-	print(header)
-    # if frappe.request.headers['X-Notification-Secret']=='CA30951A5324FCCC66EFE9C4890E93A5':
-        # from dotenv import load_dotenv
-        # load_dotenv()
-    
-    # secret=os.environ.get('secret')
 	if header=='CA30951A5324FCCC66EFE9C4890E93A5':
 		data=json.loads(frappe.request.data)
 		status=data.get('result')
@@ -113,12 +107,13 @@ def webhook():
 			invoice_frappe_json=frappe.as_json(invoice)
 			invoice_json=json.loads(invoice_frappe_json)
 			invoice_json.pop('docstatus',None)
+			invoice_json['status']="Draft"
 			invoice_json['doctype']="Sales Invoice"
 			docs=frappe.get_doc(invoice_json)
 			docs.save(ignore_permissions=True)
 			docs.submit()
 
-			# payment_entry=get_payment_entry(dt="Sales Invoice",dn=docs.name)
+			# payment_entry=get_payment_entry(dt="Sales Invoice",dn="ACC-SINV-2022-00003")
 			# payment_entry_json=frappe.as_json(payment_entry)
 			# payment_json=json.loads(payment_entry_json)
 			# payment_json.pop('docstatus',None)
