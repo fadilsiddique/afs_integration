@@ -1,14 +1,30 @@
 # from distutils.log import error
 # from email import header
+# import email
 # from http import HTTPStatus
 # from http.client import OK
+# import queue
 # from urllib import request, response
 # from urllib.error import HTTPError
 # import frappe
-# import requests
-# import json
-# from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice
 # import os
+
+# @frappe.whitelist(allow_guest=True)
+
+# def sendmail():
+
+#     doc=frappe.get_doc('Sales Invoice','ACC-SINV-2022-00006')
+#     owner=doc.contact_email
+#     print(owner)
+#     email_args={
+#         "recipients":owner,
+#         "message":"Please see your invoice",
+#         "subject":"Sales Invoice",
+#         "attachments":[frappe.attach_print(doc.doctype,doc.name,file_name=doc.name)],
+#         "reference_doctype":doc.doctype,
+#         "reference_name":doc.name
+#     }
+#     frappe.sendmail(**email_args,delayed=False)
 
 
 # @frappe.whitelist(allow_guest=True)

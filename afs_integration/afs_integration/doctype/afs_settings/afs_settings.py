@@ -1,6 +1,7 @@
 # Copyright (c) 2021, Tridz Technologies and contributors
 # For license information, please see license.txt
 from __future__ import unicode_literals
+import email
 import re
 from requests.api import get
 
@@ -64,7 +65,7 @@ def get_payment_info(order_id,dt,dn):
 			"apiOperation":"CREATE_CHECKOUT_SESSION",
 			"interaction":{
 				"operation":"PURCHASE",
-				"returnUrl":"https://dev-zoom.tridz.in/"
+				"returnUrl":"https://dev-zoom.tridz.in/orderconfirmation"
 			},
 			"order":{
 				"amount":payment_request.grand_total,
@@ -79,7 +80,7 @@ def get_payment_info(order_id,dt,dn):
 		}
 
 		payload=json.dumps(payload)
-		print(payload)
+		
 
 		headers = {
 					'Authorization': "Basic bWVyY2hhbnQuVEVTVDEwMDA3ODY5MTowMGJhN2RlMDVkOTI1ODQ5YjRlNzk2MTE4NTZmMDVkMg==",
@@ -124,6 +125,18 @@ def webhook():
 			payment_doc=frappe.get_doc(payment_json)
 			payment_doc.save(ignore_permissions=True)
 			payment_doc.submit()
+
+			invoice_doc=frappe.get_doc('Sales Invoice',docs.name)
+			owner=invoice_doc.contact_email
+			email_args={ 
+        		"recipients":owner,
+        		"message":"Please see your invoice",
+        		"subject":"Sales Invoice",
+        		"attachments":[frappe.attach_print(invoice_doc.doctype,invoice_doc.name,file_name=invoice_doc.name)],
+        		"reference_doctype":invoice_doc.doctype,
+        		"reference_name":invoice_doc.name
+    		}
+			frappe.sendmail(**email_args,delayed=False)
 			# invoice_json=json.loads(invoice_frappe_json)
 			# invoice_json.pop('__unsaved',None)	
 			# invoice_json.pop('docstatus',None)
