@@ -110,6 +110,7 @@ def webhook():
 			invoice_json=json.loads(invoice_frappe_json)
 			invoice_json.pop('docstatus',None)
 			invoice_json['status']="Draft"
+			invoice_json['naming_series']='ACC-SINV-.YYYY.-'
 			invoice_json['doctype']="Sales Invoice"
 			docs=frappe.get_doc(invoice_json)
 			docs.save(ignore_permissions=True)
