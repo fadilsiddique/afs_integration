@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 import email
 import re
+from wsgiref import headers
 from requests.api import get
 
 from requests.sessions import session
@@ -138,17 +139,24 @@ def webhook():
         		"reference_name":invoice_doc.name
     		}
 			frappe.sendmail(**email_args,delayed=False)
-			# invoice_json=json.loads(invoice_frappe_json)
-			# invoice_json.pop('__unsaved',None)	
-			# invoice_json.pop('docstatus',None)
-			# invoice_json['doctype']="Sales Invoice"
-			# docs=frappe.get_doc(invoice_json)
-			
-        
-	# else:
-	#     doc=frappe.new_doc('Webhook Capture')
-	#     doc.webhook_response=str(header)
-	#     doc.insert(ignore_permissions=True)
-	#     doc.save(ignore_permissions=True)
+
+@frappe.whitelist(allow_guest=True)
+
+def payment_status(order_id):
+	data=json.loads(frappe.request.data)
+	order_id=data['order_id']
+	print(order_id)
+
+	url="https://afs.gateway.mastercard.com/api/rest/version/64/merchant/TEST100078691/order/{0}".format(order_id)
 	
-	#     return doc
+	headers={
+		'Content-Type': 'application/json',
+		 'Authorization':"Basic bWVyY2hhbnQuVEVTVDEwMDA3ODY5MTowMGJhN2RlMDVkOTI1ODQ5YjRlNzk2MTE4NTZmMDVkMg=="
+	}
+
+	response=requests.request("GET",url,headers=headers)
+
+	res_json=json.loads(response.text)
+
+	return res_json
+
